@@ -62,5 +62,3 @@ This document defines the entities, attributes, and relationships for the Airbnb
 
 ---
 
-## 🧭 ER Diagram
-
