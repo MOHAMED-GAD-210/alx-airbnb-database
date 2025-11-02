@@ -1,14 +1,47 @@
--- Index on bookings.user_id for faster joins with users
+-- =============================
+-- Measure query performance BEFORE adding indexes
+-- =============================
+
+-- Check bookings by user_id
+EXPLAIN ANALYZE
+SELECT * FROM bookings WHERE user_id = 1;
+
+-- Check bookings by property_id
+EXPLAIN ANALYZE
+SELECT * FROM bookings WHERE property_id = 10;
+
+-- Check properties by location
+EXPLAIN ANALYZE
+SELECT * FROM properties WHERE location = 'Cairo';
+
+-- Check users by email
+EXPLAIN ANALYZE
+SELECT * FROM users WHERE email = 'example@email.com';
+
+
+-- =============================
+-- Create Indexes
+-- =============================
+
 CREATE INDEX idx_bookings_user_id ON bookings(user_id);
-
--- Index on bookings.property_id for faster joins with properties
 CREATE INDEX idx_bookings_property_id ON bookings(property_id);
-
--- Index on bookings.booking_date for faster filtering by date
 CREATE INDEX idx_bookings_date ON bookings(booking_date);
-
--- Index on properties.location for faster filtering/search
 CREATE INDEX idx_properties_location ON properties(location);
-
--- Index on users.email for faster search by email
 CREATE INDEX idx_users_email ON users(email);
+
+
+-- =============================
+-- Measure query performance AFTER adding indexes
+-- =============================
+
+EXPLAIN ANALYZE
+SELECT * FROM bookings WHERE user_id = 1;
+
+EXPLAIN ANALYZE
+SELECT * FROM bookings WHERE property_id = 10;
+
+EXPLAIN ANALYZE
+SELECT * FROM properties WHERE location = 'Cairo';
+
+EXPLAIN ANALYZE
+SELECT * FROM users WHERE email = 'example@email.com';
